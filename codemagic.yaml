@@ -1,0 +1,12 @@
+workflows:
+  ios-app:
+    name: iOS Manual Build
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build iOS .ipa
+        script: |
+          xcodebuild -project PushMeApp.xcodeproj -scheme PushMeApp -sdk iphoneos -configuration Release archive -archivePath $CM_BUILD_DIR/PushMeApp.xcarchive
+          xcodebuild -exportArchive -archivePath $CM_BUILD_DIR/PushMeApp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $CM_BUILD_DIR/PushMeApp
+    artifacts:
+      - $CM_BUILD_DIR/PushMeApp/*.ipa
